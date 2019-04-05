@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/icon_setting"
+            android:iconTint="@color/fontColor"
+            android:title="Settings" />
+        <item
+            android:id="@+id/backToHome"
+            android:icon="@drawable/icon_home"
+            android:iconTint="@color/fontColor"
+            android:title="Back to Home" />
+    </group>
+
+    <!-- Grouping
+    <item android:title="Test Group">
+        <menu>
+            <item
+                android:id="@+id/settingsTest"
+                android:icon="@drawable/icon_setting"
+                android:title="Settings" />
+            <item
+                android:id="@+id/backToHomeTest"
+                android:icon="@drawable/icon_home"
+                android:title="Back to Home" />
+        </menu>
+    </item> -->
+
+</menu>
