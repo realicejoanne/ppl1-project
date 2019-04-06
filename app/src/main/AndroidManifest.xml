@@ -8,17 +8,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Fragment.ItemListFragment"></activity>
-        <activity android:name=".Fragment.TodoListFragment" />
-        <activity android:name=".MainFragmentActivity" />
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".FragmentMainActivity"
+            android:parentActivityName=".Home.HomeScreen"
             android:label="@string/title_activity_fragment_main" />
-        <activity
-            android:name=".HomeActivity$FragmentMainActivity"
-            android:label="@string/title_activity_fragment_main" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +22,7 @@
         </activity>
         <activity
             android:name=".Home.HomeScreen"
-            android:label="@string/title_activity_home_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_home_screen" />
     </application>
 
 </manifest>
