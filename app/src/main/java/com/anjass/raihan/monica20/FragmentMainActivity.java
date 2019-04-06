@@ -1,5 +1,6 @@
 package com.anjass.raihan.monica20;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +14,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.anjass.raihan.monica20.Fragment.CommitteeFragment;
 import com.anjass.raihan.monica20.Fragment.FilesFragment;
@@ -26,20 +30,51 @@ public class FragmentMainActivity extends AppCompatActivity
     private Toolbar actionBar;
     private Fragment selectedFragment;
     private BottomNavigationView navigation;
+    private DrawerLayout drawer;
+    private ImageButton icon_close;
+    private NavigationView navigationView;
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_main);
 
+
+
+        // Settings for the drawer
         actionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(actionBar);
-
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, actionBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Close button
+        header = navigationView.getHeaderView(0);
+        icon_close = (ImageButton) header.findViewById(R.id.icon_close);
+        icon_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerOpen(GravityCompat.START)){
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+            }
+        });
+
+
+
+        // Settings for bottom navbar
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        // Setting bottom navbar color
         int[][] states = new int[][] {
                 new int[] { android.R.attr.state_selected}, // selected
                 new int[] {-android.R.attr.state_focused}, // focused
@@ -50,26 +85,22 @@ public class FragmentMainActivity extends AppCompatActivity
         };
         ColorStateList myList = new ColorStateList(states, colors);
 
+        // Setting default for bottom navbar
         if (savedInstanceState == null) {
             navigation.setSelectedItemId(R.id.navigation_committee);
             navigation.setItemIconTintList(myList);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommitteeFragment()).commit();
+            actionBar.setTitle("Committee");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new CommitteeFragment()).commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, actionBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     /* Override methods for Drawer Logic */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -89,12 +120,12 @@ public class FragmentMainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             selectedFragment = null;

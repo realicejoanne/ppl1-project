@@ -2,8 +2,10 @@ package com.anjass.raihan.monica20.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.anjass.raihan.monica20.FragmentMainActivity;
@@ -20,6 +24,11 @@ import com.anjass.raihan.monica20.R;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawer;
+    private ImageButton icon_close;
+    private NavigationView navigationView;
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,32 +46,50 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Close button
+        header = navigationView.getHeaderView(0);
+        icon_close = (ImageButton) header.findViewById(R.id.icon_close);
+        icon_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerOpen(GravityCompat.START)){
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+            }
+        });
+        LinearLayout item1 = (LinearLayout) header.findViewById(R.id.item1);
+        item1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent i = new Intent(getApplicationContext(), FragmentMainActivity.class);
+                    startActivity(i);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void onClickToFragment(View view){
-        try {
-            Intent i = new Intent(this, FragmentMainActivity.class);
-            startActivity(i);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+
     }
 
 
     /* Override methods for Drawer Logic */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
