@@ -12,7 +12,7 @@
         <activity
             android:name=".FragmentMainActivity"
             android:parentActivityName=".Home.HomeScreen"
-            android:label="@string/title_activity_fragment_main" />
+            android:label="Committee" />
         <activity android:name=".HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

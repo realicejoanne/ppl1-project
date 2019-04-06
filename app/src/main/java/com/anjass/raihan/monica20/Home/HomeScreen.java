@@ -66,6 +66,7 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
+        // Link button to TEDxUnpad
         LinearLayout item1 = (LinearLayout) header.findViewById(R.id.item1);
         item1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,7 @@ public class HomeScreen extends AppCompatActivity
                 try {
                     Intent i = new Intent(getApplicationContext(), FragmentMainActivity.class);
                     startActivity(i);
+                    drawer.closeDrawer(GravityCompat.START);
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -81,11 +83,6 @@ public class HomeScreen extends AppCompatActivity
             }
         });
     }
-
-    public void onClickToFragment(View view){
-
-    }
-
 
     /* Override methods for Drawer Logic */
     @Override

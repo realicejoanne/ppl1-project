@@ -86,17 +86,16 @@ public class FragmentMainActivity extends AppCompatActivity
         ColorStateList myList = new ColorStateList(states, colors);
 
         // Setting default for bottom navbar
+        actionBar.setTitle("Committee");
         if (savedInstanceState == null) {
             navigation.setSelectedItemId(R.id.navigation_committee);
             navigation.setItemIconTintList(myList);
-            actionBar.setTitle("Committee");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new CommitteeFragment()).commit();
         }
-
-
-
     }
+
+
 
     /* Override methods for Drawer Logic */
     @Override
@@ -117,7 +116,6 @@ public class FragmentMainActivity extends AppCompatActivity
         if (id == R.id.settings) {
             // Handle the camera action
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -156,7 +154,4 @@ public class FragmentMainActivity extends AppCompatActivity
             return true;
         }
     };
-
-
-
 }

@@ -5,16 +5,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".Fragment.ItemListFragment">
 
-    <TextView
+    <LinearLayout
+    android:id="@+id/just_space"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:orientation="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/addNewItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Item List"
-        android:textColor="@color/fontColor"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/box_background_white">
+
+            <ImageButton
+                android:id="@+id/addTaskButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_add"
+                android:padding="10dp"
+                android:background="@color/clear"
+                android:scaleType="centerInside"
+                />
+
+            <EditText
+                android:id="@+id/addItem"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@color/fontColor"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:hint="Add new item..."
+                android:textSize="15sp"
+                android:textColorHint="@color/fontColor"
+                android:background="@color/clear"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/box_background_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Items to get"
+                    android:textSize="15sp"
+                    android:textColor="@color/fontColor"/>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/icon_down"
+                    android:scaleType="centerInside"
+                    android:padding="7dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/clear"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_gray"/>
+
+            <ListView
+                android:id="@+id/itemList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
