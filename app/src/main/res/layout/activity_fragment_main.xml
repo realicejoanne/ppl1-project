@@ -7,16 +7,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@color/colorPrimary"
-    tools:context=".Fragment.FragmentMainActivity">
+    tools:context=".FragmentMainActivity">
 
-    <TextView
-        android:id="@+id/message"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/title_home"
-        android:gravity="center"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:layout_above="@+id/navigation">
+
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -27,7 +26,7 @@
         android:layout_marginEnd="0dp"
         android:background="@color/white"
         app:itemIconTint="@color/fontColor"
-        android:foregroundTint="@color/fontColor"
+        app:itemTextColor="@color/fontColor"
         app:menu="@menu/navigation" />
 
 </RelativeLayout>

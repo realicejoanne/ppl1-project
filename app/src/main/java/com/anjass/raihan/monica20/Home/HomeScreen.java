@@ -15,8 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.anjass.raihan.monica20.Fragment.FragmentMainActivity;
-import com.anjass.raihan.monica20.HomeActivity;
+import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
 
 public class HomeScreen extends AppCompatActivity

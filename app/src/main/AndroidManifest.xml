@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Fragment.ItemListFragment"></activity>
+        <activity android:name=".Fragment.TodoListFragment" />
+        <activity android:name=".MainFragmentActivity" />
         <activity
-            android:name=".Fragment.FragmentMainActivity"
-            android:label="@string/title_activity_fragment_main"></activity>
+            android:name=".FragmentMainActivity"
+            android:label="@string/title_activity_fragment_main" />
         <activity
             android:name=".HomeActivity$FragmentMainActivity"
             android:label="@string/title_activity_fragment_main" />
