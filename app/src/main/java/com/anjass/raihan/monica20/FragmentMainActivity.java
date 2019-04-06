@@ -1,5 +1,7 @@
 package com.anjass.raihan.monica20;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -29,8 +31,23 @@ public class FragmentMainActivity extends AppCompatActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        int[][] states = new int[][] {
+                new int[] { android.R.attr.state_selected}, // enabled
+                new int[] {-android.R.attr.state_enabled}, // disabled
+                new int[] {-android.R.attr.state_focused}, // focused
+                new int[] { android.R.attr.state_pressed}  // pressed
+        };
+        int[] colors = new int[] {
+                Color.parseColor("#623EEA"),
+                Color.RED,
+                Color.parseColor("#3B3745"),
+                Color.BLUE
+        };
+        ColorStateList myList = new ColorStateList(states, colors);
+
         if (savedInstanceState == null) {
             navigation.setSelectedItemId(R.id.navigation_committee);
+            navigation.setItemIconTintList(myList);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommitteeFragment()).commit();
         }
     }
