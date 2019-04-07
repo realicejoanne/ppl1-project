@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".Fragment.TodoListFragment">
 
     <LinearLayout
@@ -17,7 +18,7 @@
     <LinearLayout
         android:id="@+id/addNewTask"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -76,10 +77,10 @@
 
                 <ImageButton
                     android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
+                    android:layout_height="20dp"
                     android:src="@drawable/icon_down"
                     android:scaleType="centerInside"
+                    android:layout_marginTop="3dp"
                     android:padding="7dp"
                     android:layout_alignParentEnd="true"
                     android:background="@color/clear"/>
@@ -90,10 +91,48 @@
                 android:layout_height="1dp"
                 android:background="@drawable/divider_gray"/>
 
+            <LinearLayout
+                android:id="@+id/ifEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/clear"
+                    android:src="@drawable/empty_list"
+                    android:layout_marginBottom="45dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hurray! No tasks to do here."
+                    android:textColor="@color/fontColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How about adding new task?"
+                    android:textColor="@color/fontColor"
+                    android:textSize="15sp"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+
             <ListView
                 android:id="@+id/toDoList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:divider="@color/clear"
+                android:paddingBottom="5dp"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 
