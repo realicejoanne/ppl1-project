@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".TestActivity"
+            android:parentActivityName=".Home.HomeScreen"></activity>
         <activity
             android:name=".FragmentMainActivity"
-            android:parentActivityName=".Home.HomeScreen"
-            android:label="Committee" />
-        <activity android:name=".HomeActivity" >
+            android:label="Committee"
+            android:parentActivityName=".Home.HomeScreen" />
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

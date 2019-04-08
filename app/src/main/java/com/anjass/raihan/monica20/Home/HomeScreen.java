@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
+import com.anjass.raihan.monica20.TestActivity;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,6 +83,7 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
+
     }
 
     /* Override methods for Drawer Logic */
@@ -124,6 +126,17 @@ public class HomeScreen extends AppCompatActivity
 
         if (id == R.id.settings) {
             // Handle the camera action
+        }
+
+        if (id == R.id.testScreen){
+            try {
+                Intent i = new Intent(getApplicationContext(), TestActivity.class);
+                startActivity(i);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.anjass.raihan.monica20.Adapter.List_Adapter;
@@ -34,9 +37,12 @@ import java.util.List;
 public class TodoListFragment extends Fragment {
 
     private EditText addTask;
-    private ImageButton addTaskButton;
+    private ImageButton startAddTask ,addTaskButton;
     private ListView toDoListView;
     private LinearLayout ifEmpty;
+    private DatePicker datePicker;
+    private TimePicker timePicker;
+    private Button confirmDate, confirmTime;
 
     DatabaseReference databaseToDoList;
     private boolean isListEmpty = true;
@@ -52,9 +58,36 @@ public class TodoListFragment extends Fragment {
         databaseToDoList = FirebaseDatabase.getInstance().getReference("toDoList");
         taskList = new ArrayList<>();
         taskListGrouped = new ArrayList<>();
+
         toDoListView = (ListView) view.findViewById(R.id.toDoList);
         ifEmpty = (LinearLayout) view.findViewById(R.id.ifEmpty);
         addTask = view.findViewById(R.id.addTask);
+        datePicker = view.findViewById(R.id.datePicker);
+        timePicker = view.findViewById(R.id.timePicker);
+
+        confirmDate = view.findViewById(R.id.confirmDate);
+        confirmDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSequenceAddTime();
+            }
+        });
+
+        confirmTime = view.findViewById(R.id.confirmTime);
+        confirmTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endSequenceAddTask();
+            }
+        });
+
+        startAddTask = view.findViewById(R.id.startAddTask);
+        startAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSequenceAddDate();
+            }
+        });
 
         addTaskButton = view.findViewById(R.id.addTaskButton);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +166,36 @@ public class TodoListFragment extends Fragment {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             addTask.setText("");
+            addTaskButton.setVisibility(View.GONE);
+            startAddTask.setImageResource(R.drawable.icon_add);
+            startAddTask.setVisibility(View.VISIBLE);
         }
+    }
 
+    public void startSequenceAddDate(){
+        String taskEntered = addTask.getText().toString();
+        if (TextUtils.isEmpty(taskEntered))
+            Toast.makeText(getContext(), "What is your task?", Toast.LENGTH_SHORT).show();
+        else{
+            startAddTask.setImageResource(R.drawable.icon_calendar);
+            datePicker.setVisibility(View.VISIBLE);
+            confirmDate.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void startSequenceAddTime() {
+        datePicker.setVisibility(View.GONE);
+        confirmDate.setVisibility(View.GONE);
+
+        timePicker.setVisibility(View.VISIBLE);
+        confirmTime.setVisibility(View.VISIBLE);
+    }
+
+    public void endSequenceAddTask(){
+        timePicker.setVisibility(View.GONE);
+        confirmTime.setVisibility(View.GONE);
+
+        startAddTask.setVisibility(View.GONE);
+        addTaskButton.setVisibility(View.VISIBLE);
     }
 }
