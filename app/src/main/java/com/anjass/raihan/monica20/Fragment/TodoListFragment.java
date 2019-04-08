@@ -22,11 +22,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 public class TodoListFragment extends Fragment {
@@ -86,15 +88,6 @@ public class TodoListFragment extends Fragment {
                     taskList.add(list_class);
                 }
 
-                Collections.sort(daftarDivisi);
-                // Sorting tiap list dari divisinya ALPHABETICALLY
-                Collections.sort(taskList, new Comparator<List_Class>() {
-                    @Override
-                    public int compare(List_Class x, List_Class y) {
-                        return x.getDivisi().compareTo(y.getDivisi());
-                    }
-                });
-
                 // Finalizing
                 List_Adapter adapter = new List_Adapter(getActivity(), taskList);
                 toDoListView.setAdapter(adapter);
@@ -115,9 +108,15 @@ public class TodoListFragment extends Fragment {
     }
 
     public void addNewTask(){
+        // Getting ID push
         String id = databaseToDoList.push().getKey();
-        String divisi = "Pubdok";
+
+        //Getting current time in the server zone
+        HashMap<String, Object> map = new HashMap();
+        map.put("time", ServerValue.TIMESTAMP);
+
         String taskEntered = addTask.getText().toString();
+
 
         // Check if taskEntered is not null
         if (TextUtils.isEmpty(taskEntered))
@@ -125,7 +124,7 @@ public class TodoListFragment extends Fragment {
         else{
             // Submit the data to Firebase database
             try{
-                List_Class taskList = new List_Class(id, divisi, taskEntered, false);
+                List_Class taskList = new List_Class(id, taskEntered, false, map);
                 databaseToDoList.child(id).setValue(taskList);
                 Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
             }
