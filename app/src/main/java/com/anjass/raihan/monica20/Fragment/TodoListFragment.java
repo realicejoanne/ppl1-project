@@ -28,17 +28,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TodoListFragment extends Fragment {
 
     private EditText addTask;
-    private ImageButton startAddTask ,addTaskButton;
     private ListView toDoListView;
+    private ImageButton startAddTask;
     private LinearLayout ifEmpty;
     private DatePicker datePicker;
     private TimePicker timePicker;
@@ -48,6 +51,7 @@ public class TodoListFragment extends Fragment {
     private boolean isListEmpty = true;
     private List<List_Class> taskList, taskListGrouped;
     private List<String> daftarDivisi = new ArrayList<>();
+    private Date dueDate;
 
 
     @Nullable
@@ -86,14 +90,6 @@ public class TodoListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startSequenceAddDate();
-            }
-        });
-
-        addTaskButton = view.findViewById(R.id.addTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewTask();
             }
         });
 
@@ -141,14 +137,30 @@ public class TodoListFragment extends Fragment {
     }
 
     public void addNewTask(){
+        // ADD NEW TASK
+
+
+
         // Getting ID push
         String id = databaseToDoList.push().getKey();
 
-        //Getting current time in the server zone
+        // Getting current time in the server zone
         HashMap<String, Object> map = new HashMap();
         map.put("time", ServerValue.TIMESTAMP);
 
+        // Getting data task
         String taskEntered = addTask.getText().toString();
+        try{
+            // Getting de date
+            String dateString = datePicker.getDayOfMonth() +"-" +datePicker.getMonth()
+                    +"-" +datePicker.getYear() +" -- " +timePicker.getHour();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy -- h");
+            dueDate = dateFormat.parse(dateString);
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
 
 
         // Check if taskEntered is not null
@@ -157,22 +169,21 @@ public class TodoListFragment extends Fragment {
         else{
             // Submit the data to Firebase database
             try{
-                List_Class taskList = new List_Class(id, taskEntered, false, map);
+                List_Class taskList = new List_Class(id, taskEntered, false, map, dueDate);
                 databaseToDoList.child(id).setValue(taskList);
-                Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Task added!", Toast.LENGTH_SHORT).show();
             }
             catch (Exception e){
                 e.printStackTrace();
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             addTask.setText("");
-            addTaskButton.setVisibility(View.GONE);
-            startAddTask.setImageResource(R.drawable.icon_add);
-            startAddTask.setVisibility(View.VISIBLE);
         }
     }
 
     public void startSequenceAddDate(){
+        // THE FIRST, confirm due date
+
         String taskEntered = addTask.getText().toString();
         if (TextUtils.isEmpty(taskEntered))
             Toast.makeText(getContext(), "What is your task?", Toast.LENGTH_SHORT).show();
@@ -184,6 +195,8 @@ public class TodoListFragment extends Fragment {
     }
 
     public void startSequenceAddTime() {
+        // SECOND, confirm due time
+
         datePicker.setVisibility(View.GONE);
         confirmDate.setVisibility(View.GONE);
 
@@ -192,10 +205,14 @@ public class TodoListFragment extends Fragment {
     }
 
     public void endSequenceAddTask(){
+        // LAST, back to normal
+
         timePicker.setVisibility(View.GONE);
         confirmTime.setVisibility(View.GONE);
 
-        startAddTask.setVisibility(View.GONE);
-        addTaskButton.setVisibility(View.VISIBLE);
+        startAddTask.setVisibility(View.VISIBLE);
+        startAddTask.setImageResource(R.drawable.icon_add);
+
+        addNewTask();
     }
 }

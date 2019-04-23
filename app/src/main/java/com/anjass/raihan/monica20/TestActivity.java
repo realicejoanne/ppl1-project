@@ -17,6 +17,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class TestActivity extends AppCompatActivity {
 
     AlertDialog.Builder dialog;
@@ -49,5 +54,29 @@ public class TestActivity extends AppCompatActivity {
 
         dialogBtn = (Button)findViewById(R.id.dialog);
     }
-    
+
+    public void getDate(View v){
+        int correctMonth = datePicker.getMonth() + 1;
+        String text = "" +datePicker.getDayOfMonth() +"-" +correctMonth
+                +"-" +datePicker.getYear();
+
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        //int difference = Math.abs(datePicker.getDayOfMonth() - Integer.parseInt(sdf.format(currentDate)));
+
+        SimpleDateFormat testOutput = new SimpleDateFormat("dd/MM/yyyy -- EEE");
+
+        try{
+            int hour = timePicker.getHour();
+            Date date1 = sdf.parse(text);
+
+            result.setText(testOutput.format(date1));
+        }catch (Exception e){
+            result.setText("Gagal");
+        }
+
+        //result.setText("" +difference);
+    }
+
 }

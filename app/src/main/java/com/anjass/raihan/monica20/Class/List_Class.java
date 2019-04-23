@@ -1,26 +1,26 @@
 package com.anjass.raihan.monica20.Class;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 public class List_Class {
 
     String id,
-            isiPesan = "";
+        isiPesan = "";
     boolean isChecked;
-    Date dueDate;
     HashMap<String, Object> timestamp;
+    Date dueDate;
 
     public List_Class() {
         //Empty container
     }
 
-    public List_Class(String id, String isiPesan, boolean isChecked, HashMap<String, Object> timestamp) {
+    public List_Class(String id, String isiPesan, boolean isChecked, HashMap<String, Object> timestamp, Date dueDate) {
         this.id = id;
         this.isiPesan = isiPesan;
         this.isChecked = isChecked;
         this.timestamp = timestamp;
+        this.dueDate = dueDate;
     }
 
     public void setIsChecked(boolean checked) {
@@ -39,7 +39,7 @@ public class List_Class {
         return isChecked;
     }
 
-    public Date getDueDate(){   //Learn more!
+    public Date getDueDate() {
         return dueDate;
     }
 

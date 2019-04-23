@@ -22,7 +22,7 @@
     <TimePicker
         android:id="@+id/time_picker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:timePickerMode="clock" >
 
     </TimePicker>
@@ -40,6 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Dialog"
-        android:onClick="DialogForm"/>
+        android:onClick="getDate"/>
 
 </LinearLayout>

@@ -83,8 +83,9 @@ public class List_Adapter extends ArrayAdapter<List_Class> {
         // Setting the date
         time = (TextView) listViewItem.findViewById(R.id.time);
         try{
-            Date date = new Date( (long) pesan.getTimestamp().get("time") );
+            Date date = pesan.getDueDate();
             SimpleDateFormat sfd = new SimpleDateFormat("EEE, MMM d, hh aaa");
+
             time.setText(sfd.format(date));
         }
         catch (Exception e){
