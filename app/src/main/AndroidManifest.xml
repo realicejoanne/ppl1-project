@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".TestActivity"
+            android:parentActivityName=".Home.HomeScreen"></activity>
         <activity
             android:name=".FragmentMainActivity"
             android:label="Committee"

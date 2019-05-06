@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.anjass.raihan.monica20.Adapter.List_Adapter;
@@ -22,24 +25,33 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TodoListFragment extends Fragment {
 
     private EditText addTask;
-    private ImageButton addTaskButton;
     private ListView toDoListView;
+    private ImageButton startAddTask;
     private LinearLayout ifEmpty;
+    private DatePicker datePicker;
+    private TimePicker timePicker;
+    private Button confirmDate, confirmTime;
 
     DatabaseReference databaseToDoList;
     private boolean isListEmpty = true;
     private List<List_Class> taskList, taskListGrouped;
     private List<String> daftarDivisi = new ArrayList<>();
+    private Date dueDate;
 
 
     @Nullable
@@ -50,15 +62,34 @@ public class TodoListFragment extends Fragment {
         databaseToDoList = FirebaseDatabase.getInstance().getReference("toDoList");
         taskList = new ArrayList<>();
         taskListGrouped = new ArrayList<>();
+
         toDoListView = (ListView) view.findViewById(R.id.toDoList);
         ifEmpty = (LinearLayout) view.findViewById(R.id.ifEmpty);
         addTask = view.findViewById(R.id.addTask);
+        datePicker = view.findViewById(R.id.datePicker);
+        timePicker = view.findViewById(R.id.timePicker);
 
-        addTaskButton = view.findViewById(R.id.addTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
+        confirmDate = view.findViewById(R.id.confirmDate);
+        confirmDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewTask();
+                startSequenceAddTime();
+            }
+        });
+
+        confirmTime = view.findViewById(R.id.confirmTime);
+        confirmTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endSequenceAddTask();
+            }
+        });
+
+        startAddTask = view.findViewById(R.id.startAddTask);
+        startAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSequenceAddDate();
             }
         });
 
@@ -86,15 +117,6 @@ public class TodoListFragment extends Fragment {
                     taskList.add(list_class);
                 }
 
-                Collections.sort(daftarDivisi);
-                // Sorting tiap list dari divisinya ALPHABETICALLY
-                Collections.sort(taskList, new Comparator<List_Class>() {
-                    @Override
-                    public int compare(List_Class x, List_Class y) {
-                        return x.getDivisi().compareTo(y.getDivisi());
-                    }
-                });
-
                 // Finalizing
                 List_Adapter adapter = new List_Adapter(getActivity(), taskList);
                 toDoListView.setAdapter(adapter);
@@ -115,9 +137,31 @@ public class TodoListFragment extends Fragment {
     }
 
     public void addNewTask(){
+        // ADD NEW TASK
+
+
+
+        // Getting ID push
         String id = databaseToDoList.push().getKey();
-        String divisi = "Pubdok";
+
+        // Getting current time in the server zone
+        HashMap<String, Object> map = new HashMap();
+        map.put("time", ServerValue.TIMESTAMP);
+
+        // Getting data task
         String taskEntered = addTask.getText().toString();
+        try{
+            // Getting de date
+            String dateString = datePicker.getDayOfMonth() +"-" +datePicker.getMonth()
+                    +"-" +datePicker.getYear() +" -- " +timePicker.getHour();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy -- h");
+            dueDate = dateFormat.parse(dateString);
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
 
         // Check if taskEntered is not null
         if (TextUtils.isEmpty(taskEntered))
@@ -125,9 +169,9 @@ public class TodoListFragment extends Fragment {
         else{
             // Submit the data to Firebase database
             try{
-                List_Class taskList = new List_Class(id, divisi, taskEntered, false);
+                List_Class taskList = new List_Class(id, taskEntered, false, map, dueDate);
                 databaseToDoList.child(id).setValue(taskList);
-                Toast.makeText(getContext(), "Task added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Task added!", Toast.LENGTH_SHORT).show();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -135,6 +179,40 @@ public class TodoListFragment extends Fragment {
             }
             addTask.setText("");
         }
+    }
 
+    public void startSequenceAddDate(){
+        // THE FIRST, confirm due date
+
+        String taskEntered = addTask.getText().toString();
+        if (TextUtils.isEmpty(taskEntered))
+            Toast.makeText(getContext(), "What is your task?", Toast.LENGTH_SHORT).show();
+        else{
+            startAddTask.setImageResource(R.drawable.icon_calendar);
+            datePicker.setVisibility(View.VISIBLE);
+            confirmDate.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void startSequenceAddTime() {
+        // SECOND, confirm due time
+
+        datePicker.setVisibility(View.GONE);
+        confirmDate.setVisibility(View.GONE);
+
+        timePicker.setVisibility(View.VISIBLE);
+        confirmTime.setVisibility(View.VISIBLE);
+    }
+
+    public void endSequenceAddTask(){
+        // LAST, back to normal
+
+        timePicker.setVisibility(View.GONE);
+        confirmTime.setVisibility(View.GONE);
+
+        startAddTask.setVisibility(View.VISIBLE);
+        startAddTask.setImageResource(R.drawable.icon_add);
+
+        addNewTask();
     }
 }

@@ -10,16 +10,20 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.anjass.raihan.monica20.Class.List_Class;
 import com.anjass.raihan.monica20.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class List_Adapter extends ArrayAdapter<List_Class> {
     private Activity context;
     private List<List_Class> taskList;
     private CheckBox isiPesan;
+    private TextView time;
     private List_Class pesan;
     private LinearLayout linearLayout;
 
@@ -76,6 +80,18 @@ public class List_Adapter extends ArrayAdapter<List_Class> {
             isiPesan.setPaintFlags(isiPesan.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+        // Setting the date
+        time = (TextView) listViewItem.findViewById(R.id.time);
+        try{
+            Date date = pesan.getDueDate();
+            SimpleDateFormat sfd = new SimpleDateFormat("EEE, MMM d, hh aaa");
+
+            time.setText(sfd.format(date));
+        }
+        catch (Exception e){
+            time.setText("Failed");
+        }
+
         return listViewItem;
     }
 
@@ -91,5 +107,4 @@ public class List_Adapter extends ArrayAdapter<List_Class> {
             isiPesan.toggle();
         }
     }
-
 }

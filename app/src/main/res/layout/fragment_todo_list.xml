@@ -24,35 +24,89 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/box_background_white">
 
-            <ImageButton
-                android:id="@+id/addTaskButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/icon_add"
-                android:padding="10dp"
-                android:background="@color/clear"
-                android:scaleType="centerInside"
-                />
-
-            <EditText
-                android:id="@+id/addTask"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textColor="@color/fontColor"
-                android:paddingStart="0dp"
-                android:paddingEnd="15dp"
-                android:hint="Add new task..."
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/startAddTask"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_add"
+                    android:padding="10dp"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"/>
+                <ImageButton
+                    android:id="@+id/addTaskButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_add"
+                    android:tint="@color/primaryBlue"
+                    android:padding="10dp"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/addTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/fontColor"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="15dp"
+                    android:hint="Add new task..."
+                    android:textSize="15sp"
+                    android:textColorHint="@color/fontColor"
+                    android:background="@color/clear"/>
+            </LinearLayout>
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="calendar"
+                android:calendarViewShown="false"
+                android:visibility="gone"/>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/confirmDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryBlue"
+                android:text="Confirm Date"
+                android:textColor="@color/white"
                 android:textSize="15sp"
-                android:textColorHint="@color/fontColor"
-                android:background="@color/clear"/>
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/confirmTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryBlue"
+                android:text="Confirm Time"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:visibility="gone"/>
+
+
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,7 +183,7 @@
             <ListView
                 android:id="@+id/toDoList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:divider="@color/clear"
                 android:paddingBottom="5dp"
                 android:visibility="gone"/>
