@@ -35,11 +35,19 @@
         android:textColor="@color/fontColor"
         android:text="Result"
         android:textSize="30sp"/>
+
     <Button
         android:id="@+id/dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Dialog"
         android:onClick="getDate"/>
+
+    <Button
+        android:id="@+id/finishDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish Dialog"
+        android:onClick="finishTestDialog"/>
 
 </LinearLayout>

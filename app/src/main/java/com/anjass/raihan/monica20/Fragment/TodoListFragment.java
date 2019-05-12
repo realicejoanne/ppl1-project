@@ -30,12 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TodoListFragment extends Fragment {
 
@@ -49,8 +46,7 @@ public class TodoListFragment extends Fragment {
 
     DatabaseReference databaseToDoList;
     private boolean isListEmpty = true;
-    private List<List_Class> taskList, taskListGrouped;
-    private List<String> daftarDivisi = new ArrayList<>();
+    private List<List_Class> taskList;
     private Date dueDate;
 
 
@@ -61,7 +57,6 @@ public class TodoListFragment extends Fragment {
 
         databaseToDoList = FirebaseDatabase.getInstance().getReference("toDoList");
         taskList = new ArrayList<>();
-        taskListGrouped = new ArrayList<>();
 
         toDoListView = (ListView) view.findViewById(R.id.toDoList);
         ifEmpty = (LinearLayout) view.findViewById(R.id.ifEmpty);
