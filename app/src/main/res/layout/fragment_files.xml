@@ -5,16 +5,167 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".Fragment.FilesFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/just_space"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical"/>
+
+
+    <LinearLayout
+        android:id="@+id/addNewItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Files"
-        android:textColor="@color/fontColor"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/box_background_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:backgroundTint="#F0F1F4"
+                android:background="@drawable/box_background_white"
+                android:gravity="end" >
+
+                <EditText
+                    android:id="@+id/addItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Search files..."
+                    android:maxLines="1"
+                    android:layout_marginStart="40dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/fontColor"
+                    android:textColorHint="#A6AAB4"
+                    android:background="@color/clear"/>
+
+                <ImageButton
+                    android:id="@+id/startAddItem"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_search"
+                    android:padding="10dp"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/box_background_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Folders"
+                    android:textSize="14sp"
+                    android:textColor="@color/fontColor"/>
+
+                <ImageButton
+                    android:id="@+id/grid"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toStartOf="@+id/list"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_grid" />
+
+                <ImageButton
+                    android:id="@+id/list"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="3dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_list"
+                    android:background="@color/clear"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="vertical"
+                android:background="@drawable/divider_gray"/>
+
+            <LinearLayout
+                android:id="@+id/ifEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/clear"
+                    android:src="@drawable/empty_folder"
+                    android:layout_marginBottom="45dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No file or folder stored here"
+                    android:textColor="@color/fontColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How about adding new file or folder?"
+                    android:textColor="@color/fontColor"
+                    android:textSize="12sp"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:visibility="visible">
+
+                <GridView
+                    android:id="@+id/grid_files"
+                    android:numColumns="1"
+                    android:verticalSpacing="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </GridView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
