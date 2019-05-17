@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/background"
     android:paddingBottom="30dp"
-    tools:context=".Authentication.LoginActivity">
+    tools:context=".Authentication.RegisterActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -34,10 +34,11 @@
         android:layout_marginTop="30dp"
         android:layout_weight="1">
 
+        <!-- NAME -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="E-mail / Username"
+            android:text="Name"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/fontColor"
@@ -45,7 +46,61 @@
             android:paddingEnd="10dp"/>
 
         <EditText
-            android:id="@+id/email_username_text"
+            android:id="@+id/name_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_background_white"
+            android:inputType="textWebEmailAddress"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/fontColor"
+            android:textColorHint="#A6AAB4"
+            android:textSize="14sp" />
+
+
+        <!-- USERNAME -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fontColor"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="30dp"/>
+
+        <EditText
+            android:id="@+id/username_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/box_background_white"
+            android:inputType="textWebEmailAddress"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/fontColor"
+            android:textColorHint="#A6AAB4"
+            android:textSize="14sp" />
+
+
+        <!-- E-MAIL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/fontColor"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="30dp"/>
+
+        <EditText
+            android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="12dp"
@@ -65,7 +120,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/fontColor"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"/>
 
@@ -103,20 +158,8 @@
                 android:visibility="visible"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/forgot_password_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password?"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/fontColor"
-            android:layout_marginTop="55dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
-
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,10 +168,10 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/login_btn"
+            android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Register"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:textAlignment="center"

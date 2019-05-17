@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".LandingActivity">
+    tools:context=".Authentication.LandingActivity">
 
     <LinearLayout
         android:id="@+id/just_space"

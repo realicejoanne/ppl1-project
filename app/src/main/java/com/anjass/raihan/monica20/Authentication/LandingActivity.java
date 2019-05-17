@@ -1,15 +1,14 @@
-package com.anjass.raihan.monica20;
+package com.anjass.raihan.monica20.Authentication;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjass.raihan.monica20.Home.HomeScreen;
+import com.anjass.raihan.monica20.R;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -25,7 +24,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Intent i = new Intent(getApplicationContext(), HomeScreen.class);
+                    Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                     startActivity(i);
                 }
                 catch (Exception e){

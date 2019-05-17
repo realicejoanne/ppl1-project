@@ -17,12 +17,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjass.raihan.monica20.CreateCommittee;
 import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
 import com.anjass.raihan.monica20.TestActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,12 +34,27 @@ public class HomeScreen extends AppCompatActivity
     private ImageButton icon_close;
     private NavigationView navigationView;
     private View header;
+    private TextView profileUsername_text;
+
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        // Firebase code
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+        profileUsername_text = (TextView) findViewById(R.id.profileUsername_text);
+        if (currentUser != null){
+            profileUsername_text.setText(currentUser.getEmail());
+            profileUsername_text.setVisibility(View.VISIBLE);
+        }
+
+        // In context code
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -86,9 +104,8 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
-/* branch rifqy saya takut salah merge, kalo error berarti pake ini
-        LinearLayout createCommitte = (LinearLayout) header.findViewById(R.id.itemNew);
-        createCommitte.setOnClickListener(new View.OnClickListener() {
+        LinearLayout createCommittee = (LinearLayout) header.findViewById(R.id.itemNew);
+        createCommittee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -102,8 +119,6 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
-=======
-*/
     }
 
     /* Override methods for Drawer Logic */
