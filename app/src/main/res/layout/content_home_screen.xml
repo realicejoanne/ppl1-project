@@ -20,21 +20,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/profileUsername_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="User name"
-                android:textAlignment="center"
-                android:textColor="@color/fontColor"
-                android:textStyle="bold"
-                android:textSize="24sp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="30dp"
-                android:visibility="gone"/>
-
-
             <CalendarView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

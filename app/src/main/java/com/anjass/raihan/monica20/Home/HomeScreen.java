@@ -34,10 +34,11 @@ public class HomeScreen extends AppCompatActivity
     private ImageButton icon_close;
     private NavigationView navigationView;
     private View header;
-    private TextView profileUsername_text;
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
+
+    String userData_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +49,18 @@ public class HomeScreen extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        profileUsername_text = (TextView) findViewById(R.id.profileUsername_text);
-        if (currentUser != null){
-            profileUsername_text.setText(currentUser.getEmail());
-            profileUsername_text.setVisibility(View.VISIBLE);
-        }
-
         // In context code
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        userData_string = "Userdata \n" +
+                "Email: " +currentUser.getEmail();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "TEST", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
