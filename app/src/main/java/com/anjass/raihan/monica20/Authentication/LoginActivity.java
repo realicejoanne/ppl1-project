@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email_username_text,
         password_text;
     private ImageButton visible_password;
+    private ProgressBar loading_bar;
 
 
     FirebaseAuth firebaseAuth;
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         email_username_text = (EditText) findViewById(R.id.email_username_text);
         password_text = (EditText) findViewById(R.id.password_text);
+        loading_bar = (ProgressBar) findViewById(R.id.loading_bar);
 
         visible_password = (ImageButton) findViewById(R.id.visible_password);
         visible_password.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!email_username.isEmpty() && !password.isEmpty()){
                     try {
-                        Intent i = new Intent(getApplicationContext(), HomeScreen.class);
-                        startActivity(i);
-                        finish();
+                        userLogin();
                     }
                     catch (Exception e){
                         e.printStackTrace();
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(getApplication(),"Please fill all fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(),"Please fill all fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -115,11 +116,19 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    // LOGIN WITH FIREBASE
     public void userLogin(){
+        // Fetching text
         email_username = email_username_text.getText().toString().trim();
         password = password_text.getText().toString().trim();
 
+        // Logic
         if (!email_username.isEmpty() && !password.isEmpty()){
+            // Start loading
+            loading_bar.setVisibility(View.VISIBLE);
+            login_btn.setClickable(false);
+
             firebaseAuth.signInWithEmailAndPassword(email_username, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -127,12 +136,18 @@ public class LoginActivity extends AppCompatActivity {
                     //if the task is successfull
                     if(task.isSuccessful()){
                         //start the profile activity
-                        Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(), "Sign in succes!", Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                     }
+                    else{
+                        loading_bar.setVisibility(View.GONE);
+                        login_btn.setClickable(true);
+                    }
                 }
             });
+
+
         }
     }
 }

@@ -9,16 +9,29 @@ import android.widget.Toast;
 
 import com.anjass.raihan.monica20.Home.HomeScreen;
 import com.anjass.raihan.monica20.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LandingActivity extends AppCompatActivity {
 
     private TextView register_btn, login_btn;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
+        // Firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null){
+            //close this activity
+            finish();
+            //opening profile activity
+            startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+        }
+
+        // Context codes
         register_btn = (TextView) findViewById(R.id.register_btn);
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
