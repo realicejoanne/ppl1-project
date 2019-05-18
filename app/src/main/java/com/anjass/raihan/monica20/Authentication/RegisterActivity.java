@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +29,13 @@ public class RegisterActivity extends AppCompatActivity {
         email_text,
         password_text;
     private TextView register_btn;
+    private ImageButton visible_password;
     private ProgressBar loading_bar;
 
     FirebaseAuth mAuth;
 
     private String email, password;
+    private boolean dotPasswordMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +52,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // Context code
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         name_text = (EditText) findViewById(R.id.name_text);
         username_text = (EditText) findViewById(R.id.username_text);
         email_text = (EditText) findViewById(R.id.email_text);
         password_text = (EditText) findViewById(R.id.password_text);
         loading_bar = (ProgressBar) findViewById(R.id.loading_bar);
+
+        visible_password = (ImageButton) findViewById(R.id.visible_password);
+        visible_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dotPasswordMode){
+                    password_text.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    dotPasswordMode = false;
+                }
+                else{
+                    password_text.setInputType(InputType.TYPE_CLASS_TEXT);
+                    dotPasswordMode = true;
+                }
+            }
+        });
 
         register_btn = (TextView) findViewById(R.id.register_btn);
         register_btn.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign up fails, display a message to the user.
                             Toast.makeText(getApplicationContext(), task.getException().toString(),
                                     Toast.LENGTH_SHORT).show();
 

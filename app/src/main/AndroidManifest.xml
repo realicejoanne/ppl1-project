@@ -18,7 +18,8 @@
         </activity>
         <activity
             android:name=".Authentication.RegisterActivity"
-            android:label="Register" />
+            android:label="Register"
+            android:parentActivityName=".Authentication.LandingActivity"/>
         <activity android:name=".Authentication.LandingActivity"/>
         <activity
             android:name=".Authentication.LoginActivity"

@@ -141,6 +141,10 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), HomeScreen.class));
                     }
                     else{
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(getApplicationContext(), task.getException().toString(),
+                                Toast.LENGTH_SHORT).show();
+
                         loading_bar.setVisibility(View.GONE);
                         login_btn.setClickable(true);
                     }
