@@ -9,16 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".LandingActivity">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".Authentication.RegisterActivity"
+            android:label="Register"
+            android:parentActivityName=".Authentication.LandingActivity"/>
+        <activity android:name=".Authentication.LandingActivity"/>
+        <activity
+            android:name=".Authentication.LoginActivity"
             android:label="Login"
-            android:parentActivityName=".LandingActivity"></activity>
+            android:parentActivityName=".Authentication.LandingActivity" />
         <activity
             android:name=".TestActivity"
             android:parentActivityName=".Home.HomeScreen" />

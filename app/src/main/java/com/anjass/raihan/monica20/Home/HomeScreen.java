@@ -17,12 +17,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anjass.raihan.monica20.Authentication.LandingActivity;
 import com.anjass.raihan.monica20.CreateCommittee;
 import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
+import com.anjass.raihan.monica20.Splash;
 import com.anjass.raihan.monica20.TestActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,19 +37,35 @@ public class HomeScreen extends AppCompatActivity
     private NavigationView navigationView;
     private View header;
 
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+
+    String userData_string;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        // Firebase code
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+        // In context code
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (currentUser != null)
+            userData_string = "Userdata \n" +
+                "Email: " +currentUser.getEmail();
+        else
+            userData_string = "Account signed out";
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, userData_string, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -70,8 +91,8 @@ public class HomeScreen extends AppCompatActivity
             }
         });
         // Link button to TEDxUnpad
-        LinearLayout item1 = (LinearLayout) header.findViewById(R.id.item1);
-        item1.setOnClickListener(new View.OnClickListener() {
+        LinearLayout item2 = (LinearLayout) header.findViewById(R.id.item2);
+        item2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -86,9 +107,8 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
-/* branch rifqy saya takut salah merge, kalo error berarti pake ini
-        LinearLayout createCommitte = (LinearLayout) header.findViewById(R.id.itemNew);
-        createCommitte.setOnClickListener(new View.OnClickListener() {
+        LinearLayout createCommittee = (LinearLayout) header.findViewById(R.id.itemNew);
+        createCommittee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -102,8 +122,6 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
-=======
-*/
     }
 
     /* Override methods for Drawer Logic */
@@ -131,8 +149,12 @@ public class HomeScreen extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.sign_out) {
+            // Handle the logout action
+            mAuth.signOut();
+
+            finish();
+            startActivity(new Intent(getApplicationContext(), LandingActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -144,19 +166,9 @@ public class HomeScreen extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.settings) {
-            // Handle the camera action
-        }
+        if (id == R.id.sign_out) {
+            // Handle the logout action
 
-        if (id == R.id.testScreen){
-            try {
-                Intent i = new Intent(getApplicationContext(), TestActivity.class);
-                startActivity(i);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-                Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
