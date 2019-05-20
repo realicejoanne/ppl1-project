@@ -1,10 +1,12 @@
 package com.anjass.raihan.monica20.Home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +29,16 @@ import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
 import com.anjass.raihan.monica20.Splash;
 import com.anjass.raihan.monica20.TestActivity;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,11 +47,19 @@ public class HomeScreen extends AppCompatActivity
     private ImageButton icon_close;
     private NavigationView navigationView;
     private View header;
+    private ImageView prev_mon_btn,
+            next_mon_btn;
+    private TextView prev_mon,
+            curr_mon,
+            next_mon;
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
+    CompactCalendarView compactCalendar;
 
     String userData_string;
+    SimpleDateFormat dateFormatMonthDisplay = new SimpleDateFormat("MMMM", Locale.getDefault()),
+            dateFormatThreeLetter = new SimpleDateFormat("MMM", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +80,64 @@ public class HomeScreen extends AppCompatActivity
         else
             userData_string = "Account signed out";
 
+        // Calendar Test ====================
+        compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        compactCalendar.setUseThreeLetterAbbreviation(true);
+
+        Event ev1 = new Event(R.color.primaryBlue, 1558170030000L, "Some extra data that I want to store.");
+        compactCalendar.addEvent(ev1);
+
+        // Query for events
+        // Time is not relevant when querying for events, since events are returned by day.
+        // So you can pass in any arbitary DateTime and you will receive all events for that day.
+        List<Event> events = compactCalendar.getEvents(1558170030000L); // can also take a Date object
+
+        compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                List<Event> events = compactCalendar.getEvents(dateClicked);
+                Toast.makeText(getApplicationContext(),
+                        "Day was clicked: " +dateClicked
+                                +" with events " +events, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                Toast.makeText(getApplicationContext(),
+                        "Month was scrolled to: "
+                                +dateFormatMonthDisplay.format(firstDayOfNewMonth), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Setting month view
+        curr_mon = (TextView) findViewById(R.id.curr_mon);
+        prev_mon = (TextView) findViewById(R.id.prev_mon);
+        next_mon = (TextView) findViewById(R.id.next_mon);
+
+        Calendar currentTime = Calendar.getInstance();
+        //setPrevCurrenNextMonth(currentTime.getTime());
+
+        prev_mon.setText(dateFormatThreeLetter.format(compactCalendar.getFirstDayOfCurrentMonth()));
+        prev_mon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendar.scrollLeft();
+                setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
+            }
+        });
+
+        next_mon.setText(dateFormatThreeLetter.format(compactCalendar.getFirstDayOfCurrentMonth()));
+        next_mon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendar.scrollRight();
+                setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
+            }
+        });
+        // Calendar Test end ====================
+
+
+        // Context Codes
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +167,8 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
-        // Link button to TEDxUnpad
+
+        // Link button to Techopreneur
         LinearLayout item2 = (LinearLayout) header.findViewById(R.id.item2);
         item2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +185,7 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
+        // Link button to Committee Creation
         LinearLayout createCommittee = (LinearLayout) header.findViewById(R.id.itemNew);
         createCommittee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +201,31 @@ public class HomeScreen extends AppCompatActivity
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
+    }
+
+    public void setPrevCurrenNextMonth(Date dateParsed){
+        Calendar setMonth = Calendar.getInstance();
+        
+        // Current Month
+        setMonth.setTime(dateParsed);
+        curr_mon.setText(dateFormatMonthDisplay.format(setMonth.getTime()));
+
+        // Prev Month
+        setMonth.setTime(dateParsed);
+        setMonth.add(Calendar.MONTH, -1);
+        prev_mon.setText(dateFormatThreeLetter.format(setMonth.getTime()));
+
+        // Next Month
+        setMonth.setTime(dateParsed);
+        setMonth.add(Calendar.MONTH, 1);
+        next_mon.setText(dateFormatThreeLetter.format(setMonth.getTime()));
     }
 
     /* Override methods for Drawer Logic */
