@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    TextView titleToolbar;
+    ImageView backToolbar;
 
     private EditText name_text,
         username_text,
@@ -51,10 +55,20 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), HomeScreen.class));
         }
 
-        // Context code
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        titleToolbar = (TextView) findViewById(R.id.titleToolbar);
+        titleToolbar.setText("Register");
+        backToolbar = (ImageView) findViewById(R.id.backToolbar);
+        backToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        // Context code
         name_text = (EditText) findViewById(R.id.name_text);
         username_text = (EditText) findViewById(R.id.username_text);
         email_text = (EditText) findViewById(R.id.email_text);
