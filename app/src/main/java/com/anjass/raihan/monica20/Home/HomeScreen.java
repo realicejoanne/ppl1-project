@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,10 @@ import java.util.Locale;
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    TextView titleToolbar;
+    ImageView hbgToolbar, notifToolbar, profileToolbar;
+    PopupMenu popupMenu;
+
     private DrawerLayout drawer;
     private ImageButton icon_close;
     private NavigationView navigationView;
@@ -82,15 +88,72 @@ public class HomeScreen extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        // In context code
+        if (currentUser != null)
+            userData_string = "Userdata \n" +
+                    "Email: " +currentUser.getEmail();
+        else
+            userData_string = "Account signed out";
+
+
+
+
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (currentUser != null)
-            userData_string = "Userdata \n" +
-                "Email: " +currentUser.getEmail();
-        else
-            userData_string = "Account signed out";
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        titleToolbar = (TextView) findViewById(R.id.titleToolbar);
+        titleToolbar.setText("Home");
+        hbgToolbar = (ImageView) findViewById(R.id.hbgToolbar);
+        hbgToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Close button
+        header = navigationView.getHeaderView(0);
+        icon_close = (ImageButton) header.findViewById(R.id.icon_close);
+        icon_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerOpen(GravityCompat.START)){
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+            }
+        });
+
+        profileToolbar = (ImageView) findViewById(R.id.profileToolbar);
+        profileToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu = new PopupMenu(getApplicationContext(), v);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        //noinspection SimplifiableIfStatement
+                        if (id == R.id.sign_out) {
+                            // Handle the logout action
+                            mAuth.signOut();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), LandingActivity.class));
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.inflate(R.menu.home_screen);
+                popupMenu.show();
+            }
+        });
+
+
+
+        // In context code
 
         // Calendar Test ====================
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
@@ -215,27 +278,6 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // Close button
-        header = navigationView.getHeaderView(0);
-        icon_close = (ImageButton) header.findViewById(R.id.icon_close);
-        icon_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawer.isDrawerOpen(GravityCompat.START)){
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-            }
-        });
-
         // Link button to Techopreneur
         LinearLayout item2 = (LinearLayout) header.findViewById(R.id.item2);
         item2.setOnClickListener(new View.OnClickListener() {
@@ -304,32 +346,6 @@ public class HomeScreen extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.sign_out) {
-            // Handle the logout action
-            mAuth.signOut();
-
-            finish();
-            startActivity(new Intent(getApplicationContext(), LandingActivity.class));
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
