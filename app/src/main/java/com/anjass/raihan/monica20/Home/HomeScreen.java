@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -23,7 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anjass.raihan.monica20.Adapter.List_Adapter;
 import com.anjass.raihan.monica20.Authentication.LandingActivity;
+import com.anjass.raihan.monica20.Class.List_Class;
 import com.anjass.raihan.monica20.CreateCommittee;
 import com.anjass.raihan.monica20.FragmentMainActivity;
 import com.anjass.raihan.monica20.R;
@@ -33,8 +36,14 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,11 +64,14 @@ public class HomeScreen extends AppCompatActivity
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
+    DatabaseReference databaseToDoList;
     CompactCalendarView compactCalendar;
 
     String userData_string;
     SimpleDateFormat dateFormatMonthDisplay = new SimpleDateFormat("MMMM", Locale.getDefault()),
             dateFormatThreeLetter = new SimpleDateFormat("MMM", Locale.getDefault());
+    boolean shouldShow = false;
+    List<List_Class> itemList = new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +96,11 @@ public class HomeScreen extends AppCompatActivity
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
-        Event ev1 = new Event(R.color.primaryBlue, 1558170030000L, "Some extra data that I want to store.");
+        Event ev1 = new Event(Color.parseColor("#3D358B"), 1558170030000L, "Some extra data that I want to store.");
         compactCalendar.addEvent(ev1);
+
+        Event ev2 = new Event(Color.parseColor("#3D358B"), 1558170030000L, "Maen");
+        compactCalendar.addEvent(ev2);
 
         // Query for events
         // Time is not relevant when querying for events, since events are returned by day.
@@ -108,17 +123,31 @@ public class HomeScreen extends AppCompatActivity
                                 +dateFormatMonthDisplay.format(firstDayOfNewMonth), Toast.LENGTH_SHORT).show();
             }
         });
+        compactCalendar.setAnimationListener(new CompactCalendarView.CompactCalendarAnimationListener() {
+            @Override
+            public void onOpened() {
+            }
+
+            @Override
+            public void onClosed() {
+            }
+        });
 
         // Setting month view
         curr_mon = (TextView) findViewById(R.id.curr_mon);
         prev_mon = (TextView) findViewById(R.id.prev_mon);
         next_mon = (TextView) findViewById(R.id.next_mon);
 
-        Calendar currentTime = Calendar.getInstance();
-        //setPrevCurrenNextMonth(currentTime.getTime());
-
         prev_mon.setText(dateFormatThreeLetter.format(compactCalendar.getFirstDayOfCurrentMonth()));
         prev_mon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendar.scrollLeft();
+                setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
+            }
+        });
+        prev_mon_btn = (ImageView) findViewById(R.id.prev_mon_btn);
+        prev_mon_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compactCalendar.scrollLeft();
@@ -134,8 +163,47 @@ public class HomeScreen extends AppCompatActivity
                 setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
             }
         });
+        next_mon_btn = (ImageView) findViewById(R.id.next_mon_btn);
+        next_mon_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendar.scrollRight();
+                setPrevCurrenNextMonth(compactCalendar.getFirstDayOfCurrentMonth());
+            }
+        });
         // Calendar Test end ====================
 
+
+        // Getting data from Firebase =====================
+        databaseToDoList = FirebaseDatabase.getInstance().getReference("itemList");
+        //Ambil data dari Firebase Database
+        databaseToDoList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //Kalo update, clear dulu biar ga numpuk
+                itemList.clear();
+
+                // Kirim data perchild ke kelas responden
+                for(DataSnapshot respondenSnapshot : dataSnapshot.getChildren()){
+                    List_Class list_class = respondenSnapshot.getValue(List_Class.class);
+
+                    itemList.add(list_class);
+                }
+
+                /*Event ev1 = new Event(Color.parseColor("#3D358B"),
+                        , "Some extra data that I want to store.");
+                compactCalendar.addEvent(ev1);*/
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        // Getting data from Firebase  end =====================
 
         // Context Codes
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -212,7 +280,7 @@ public class HomeScreen extends AppCompatActivity
 
     public void setPrevCurrenNextMonth(Date dateParsed){
         Calendar setMonth = Calendar.getInstance();
-        
+
         // Current Month
         setMonth.setTime(dateParsed);
         curr_mon.setText(dateFormatMonthDisplay.format(setMonth.getTime()));

@@ -91,7 +91,7 @@
                     app:compactCalendarTextColor="@color/fontColor"
                     app:compactCalendarCurrentSelectedDayBackgroundColor="@color/primaryBlue"
                     app:compactCalendarCurrentDayBackgroundColor="@color/white"
-                    app:compactCalendarMultiEventIndicatorColor="@color/technopreneurColor"
+                    app:compactCalendarMultiEventIndicatorColor="@color/primaryBlue"
                     app:compactCalendarCurrentDayTextColor="@color/primaryBlue"
                     app:compactCalendarCurrentSelectedDayTextColor="@color/white"/>
             </LinearLayout>
