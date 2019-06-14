@@ -166,9 +166,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hurray! No items to do here."
+                    android:text="Hurray! No items needed here."
                     android:textColor="@color/fontColor"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
                 <TextView
@@ -176,8 +176,30 @@
                     android:layout_height="wrap_content"
                     android:text="How about adding new item?"
                     android:textColor="@color/fontColor"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:textAlignment="center"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sure!"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:backgroundTint="@color/primaryBlue"
+                        android:background="@drawable/box_background_white"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <ListView

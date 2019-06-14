@@ -9,13 +9,17 @@
 
         <item name="actionMenuTextColor">@color/fontColor</item>
 
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
         <!-- Default font -->
         <item name="android:fontFamily">@font/nunito</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="AppTheme.NoActionBar" parent="@android:style/Theme.Holo.Light" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
