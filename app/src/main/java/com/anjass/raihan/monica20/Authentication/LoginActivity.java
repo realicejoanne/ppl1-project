@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
+
+    TextView titleToolbar;
+    ImageView backToolbar;
 
     private TextView forgot_password_btn,
             login_btn;
@@ -53,11 +57,20 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), HomeScreen.class));
         }
 
-
-        // Android Context
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        titleToolbar = (TextView) findViewById(R.id.titleToolbar);
+        titleToolbar.setText("Login");
+        backToolbar = (ImageView) findViewById(R.id.backToolbar);
+        backToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        // Android Context
         email_username_text = (EditText) findViewById(R.id.email_username_text);
         password_text = (EditText) findViewById(R.id.password_text);
         loading_bar = (ProgressBar) findViewById(R.id.loading_bar);
