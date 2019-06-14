@@ -16,13 +16,4 @@
             android:title="Back to Home" />
     </group>
 
-    <item android:title="Experimental Test *Hidden">
-        <menu>
-            <item
-                android:id="@+id/testScreen"
-                android:icon="@drawable/icon_edit"
-                android:title="In to the Void" />
-        </menu>
-    </item>
-
 </menu>
