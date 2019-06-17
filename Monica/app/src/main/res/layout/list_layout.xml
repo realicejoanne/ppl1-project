@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="7dp"
+    android:paddingEnd="15dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        android:weightSum="6">
+
+        <CheckBox
+            android:id="@+id/pesan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/fontColor"
+            android:textColor="@color/fontColor"
+            android:textSize="15sp"
+            android:text="This will be the isiPesan"
+            android:layout_weight="2"
+            android:checked="false" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:textAlignment="textEnd"
+            android:text="Day, N PM"
+            android:textColor="@color/fontColor"
+            android:textSize="15sp"
+            android:visibility="visible"
+            android:layout_weight="4" />
+
+    </LinearLayout>
+</LinearLayout>

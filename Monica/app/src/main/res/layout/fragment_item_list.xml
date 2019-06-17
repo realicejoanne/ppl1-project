@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".Fragment.ItemListFragment">
+
+    <LinearLayout
+        android:id="@+id/just_space"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/addNewItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/box_background_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/startAddItem"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_add"
+                    android:padding="10dp"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:visibility="visible"/>
+                <ImageButton
+                    android:id="@+id/addItemButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_add"
+                    android:tint="@color/primaryBlue"
+                    android:padding="10dp"
+                    android:background="@color/clear"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/addItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/fontColor"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="15dp"
+                    android:hint="Add new item..."
+                    android:textSize="15sp"
+                    android:textColorHint="@color/fontColor"
+                    android:background="@color/clear"/>
+            </LinearLayout>
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="calendar"
+                android:calendarViewShown="false"
+                android:visibility="gone"/>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/confirmDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryBlue"
+                android:text="Confirm Date"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/confirmTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primaryBlue"
+                android:text="Confirm Time"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:visibility="gone"/>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/box_background_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Items to get"
+                    android:textSize="15sp"
+                    android:textColor="@color/fontColor"/>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_down"
+                    android:scaleType="centerInside"
+                    android:layout_marginTop="3dp"
+                    android:padding="7dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/clear"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider_gray"/>
+
+            <LinearLayout
+                android:id="@+id/ifEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/clear"
+                    android:src="@drawable/empty_list"
+                    android:layout_marginBottom="45dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hurray! No items needed here."
+                    android:textColor="@color/fontColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How about adding new item?"
+                    android:textColor="@color/fontColor"
+                    android:textSize="12sp"
+                    android:textAlignment="center"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sure!"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:backgroundTint="@color/primaryBlue"
+                        android:background="@drawable/box_background_white"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/itemList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/clear"
+                android:paddingBottom="5dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

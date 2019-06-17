@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E5E5E5</color>
+    <color name="colorPrimaryDark">#3B3745</color>
+    <color name="colorAccent">#623EEA</color>
+
+    <!-- Monica v2.0 -->
+    <color name="background">#E5E5E5</color>
+    <color name="fontColor">#3B3745</color>
+    <color name="fontColorWhite">#F2F2F2</color>
+    <color name="primaryBlue">#623EEA</color>
+    <color name="accentOrange">#FB8B25</color>
+
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="clear">@null</color>
+
+    <!-- Custom Color -->
+    <color name="technopreneurColor">#3D358B</color>
+    <color name="softBlue">#2D9CDB</color>
+    <color name="opaque">#FFffffff</color>
+    <color name="transparent">#00ffffff</color>
+</resources>
